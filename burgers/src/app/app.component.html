@@ -1,0 +1,131 @@
+<section class="main">
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="./assets/images/Logo.png" alt="Logo"></a>
+      </div>
+      <nav class="menu">
+        <ul class="menu-list">
+          <li class="menu-item">
+            <a (click)="scrollTo(why)">Почему у нас</a>
+          </li>
+          <li class="menu-item">
+            <a (click)="scrollTo(products)">Меню бургеров</a>
+          </li>
+          <li class="menu-item">
+            <a (click)="scrollTo(order)">Оформление заказа</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="currency" title="Изменить валюту" id="change-currency" (click)="changeCurrency()">{{currency}}</div>
+    </div>
+  </header>
+
+  <section class="main-content">
+    <div class="container">
+      <div class="main-info">
+        <span class="main-small-info">Новое меню</span>
+        <h1 class="main-title">Бургер чеддер</h1>
+        <p class="main-text">Мы обновили наше меню, спешите попробовать сезонные новинки и насладиться отличным
+          вкусом наших бургеров. Готовим для вас лучшие бургеры в городе из отборной мраморной говядины.</p>
+        <div class="main-action">
+          <button class="button" id="main-button" (click)="scrollTo(products)">Смотреть меню</button>
+        </div>
+      </div>
+      <img src="./assets/images/main_burger.png" alt="Big Burger" class="main-image">
+    </div>
+  </section>
+</section>
+
+<section class="why" id="why" #why>
+  <div class="container">
+    <h2 class="common-title">почему нас выбирают?</h2>
+    <div class="why-items">
+      <div class="why-item">
+        <img src="./assets/images/bgrs-why/burger.png" alt="burger" class="why-image">
+        <h3 class="why-item-title">Авторские рецепты</h3>
+        <p class="why-item-text">Наши бургеры обладают уникальным сочетанием вкусов и не похожи ни на какие
+          другие. Мы тщательно отбираем лучшие ингредиенты и сочетания вкусов для нашего меню.
+        </p>
+      </div>
+      <div class="why-item">
+        <img src="./assets/images/bgrs-why/food-truck.png" alt="food truck" class="why-image">
+        <h3 class="why-item-title">Мраморная говядина</h3>
+        <p class="why-item-text">Для наших бургеров мы используем отборную 100% мраморную говядину, которую
+          закупаем исключительно у фермеров. Мы уверены в качестве нашего мяса.</p>
+      </div>
+      <div class="why-item">
+        <img src="./assets/images/bgrs-why/meat.png" alt="meat" class="why-image">
+        <h3 class="why-item-title">Быстрая доставка</h3>
+        <p class="why-item-text">Мы доставляем в пределах МКАД за 30 минут, а если не успеем — доставка
+          бесплатно. Мы тщательно упаковываем наши бургеры, чтобы по дороге они не остыли.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="products" #products>
+  <div class="container">
+    <h2 class="common-title">выберите свой бургер</h2>
+    <div class="products-items">
+
+      <div class="products-item" *ngFor="let product of productsData">
+        <div class="products-item__image">
+          <img src="./assets/images/products/{{product.image}}" alt="Бургер чеддер & бекон">
+        </div>
+        <div class="products-item__info">
+          <h3 class="products-item__title">{{product.title}}</h3>
+          <p class="products-item____text">{{product.text}}</p>
+        </div>
+        <div class="products-item-footer">
+          <div class="products-item-footer-info">
+            <div class="products-item-footer-info__price" >{{product.price}} {{currency}}</div>
+            <div class="products-item-footer-info__weight">{{product.grams}} гр</div>
+          </div>
+          <div class="products-item__actions">
+            <button class="button product-button"  (click)="scrollTo(order, product)">
+              <span> Заказать</span>
+              <span><img src="./assets/images/products/ico.svg"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="order" id="order" #order>
+  <div class="container">
+    <h2 class="common-title">оформление заказа</h2>
+    <img class="order-image" src="./assets/images/order/food-delivery.png">
+    <div class="order-form"  >
+      <p class="order-form__text">Заполните все данные и наш менеджер свяжется с вами для подтверждения заказа</p>
+      <div class="order-form__inputs" [formGroup]="form">
+        <div class="order-form__input" [class]="{'error': form.get('order')?.invalid && (form.get('order')?.dirty || form.get('order')?.touched ) }">
+          <input type="text" placeholder="Выберите товар в списке" id="burger" formControlName="order" readonly>
+        </div>
+
+        <div class="order-form__input" [class]="{'error': form.get('order')?.invalid && (form.get('name')?.dirty || form.get('order')?.touched ) }">
+          <input type="text" placeholder="Ваше имя" id="name" formControlName="name">
+        </div>
+
+
+        <div class="order-form__input" [class]="{'error': form.get('order')?.invalid && (form.get('phone')?.dirty || form.get('order')?.touched ) }">
+          <input type="text" placeholder="Ваш телефон" id="phone" formControlName="phone">
+        </div>
+      </div>
+      <button class="button order-form__button" id="order-action" (click)="confirmOrder()" [disabled]="!form.valid" >Оформить заказ</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="logo">
+      <img src="./assets/images/Logo.png" alt="Logo">
+    </div>
+    <div class="right">Все права защищены</div>
+  </div>
+</footer>
